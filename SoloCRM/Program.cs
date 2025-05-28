@@ -57,6 +57,8 @@ builder.Services.AddRazorPages(options =>
 
 // Add Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
 
 var app = builder.Build();
 

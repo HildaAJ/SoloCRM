@@ -1,0 +1,88 @@
+﻿@page
+@model SoloCRM.Pages.Customers.CreateModel
+@{
+	ViewData["Title"] = "Create Customer";
+}
+
+<h1>Create Customer</h1>
+
+<h4>Customer Information</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Name Field (Required) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.Name" class="control-label"></label>
+                <input asp-for="CustomerViewModel.Name" class="form-control" />
+                <span asp-validation-for="CustomerViewModel.Name" class="text-danger"></span>
+            </div>
+
+            <!-- Tel Field (Required) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.Tel" class="control-label"></label>
+                <input asp-for="CustomerViewModel.Tel" class="form-control" />
+                <span asp-validation-for="CustomerViewModel.Tel" class="text-danger"></span>
+            </div>
+
+            <!-- Met When Field (Optional Date) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.MetWhen" class="control-label"></label>
+                <input asp-for="CustomerViewModel.MetWhen" class="form-control" type="date" />
+                <span asp-validation-for="CustomerViewModel.MetWhen" class="text-danger"></span>
+            </div>
+
+            <!-- MetWhere Field (Optional) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.MetWhere" class="control-label"></label>
+                <input asp-for="CustomerViewModel.MetWhere" class="form-control" />
+                <span asp-validation-for="CustomerViewModel.MetWhere" class="text-danger"></span>
+            </div>
+
+
+            <!-- State Field (Optional) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.State" class="control-label"></label>
+                <input asp-for="CustomerViewModel.State" class="form-control" />
+                <span asp-validation-for="CustomerViewModel.State" class="text-danger"></span>
+            </div>
+
+            <!-- Status Field (Required Dropdown) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.Status" class="control-label"></label>
+                <select asp-for="CustomerViewModel.Status" class="form-control" asp-items="Model.StatusList">
+                    @* <option value="">-- Select Status --</option> *@
+                </select>
+                <span asp-validation-for="CustomerViewModel.Status" class="text-danger"></span>
+            </div>
+
+            <!-- Email Field (Optional) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.Email" class="control-label"></label>
+                <input asp-for="CustomerViewModel.Email" class="form-control" type="email" />
+                <span asp-validation-for="CustomerViewModel.Email" class="text-danger"></span>
+            </div>
+
+            <!-- Note Field (Optional) -->
+            <div class="form-group mb-3">
+                <label asp-for="CustomerViewModel.Note" class="control-label"></label>
+                <textarea asp-for="CustomerViewModel.Note" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="CustomerViewModel.Note" class="text-danger"></span>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

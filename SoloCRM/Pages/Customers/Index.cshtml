@@ -1,0 +1,226 @@
+﻿@page
+@model SoloCRM.Pages.Customers.IndexModel
+@{
+	ViewData["Title"] = "Customer Management";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">@ViewData["Title"]</h2>
+
+            <!-- Search functionality -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="searchTerm" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="searchTerm" name="searchTerm"
+                                   value="@Model.SearchTerm" placeholder="Search customers...">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary me-2">Search</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="clearSearch()">Clear</button>
+                            @* <a href="@Url.Page("Index")" class="btn btn-outline-secondary">Clear</a> *@
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Customer list -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Customer List</h5>
+                    <span class="badge bg-info">Total @Model.Customers.Count() records</span>
+                </div>
+                <div class="card-body p-0">
+                    @if (Model.Customers.Count()>0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th width="180">Actions</th>
+                                        <th>Name</th>
+                                        <th>Tel</th>
+                                        <th>State</th>
+                                        <th>Status</th>
+                                        <th>Email</th>
+                                        <th>Note</th>
+                                        <th>Met Where</th>
+                                        <th>Met When</th>
+                                        <th>Team Member</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var customer in Model.Customers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <button type="button" class="btn btn-info btn-sm"
+                                                            title="View Details">
+                                                        <i class="bi bi-eye"></i> View
+                                                    </button>
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                            title="Purchase Records">
+                                                        <i class="bi bi-cart"></i> Purchase
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-sm"
+                                                            title="Join Team">
+                                                        <i class="bi bi-people"></i> Join
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <strong>@customer.Name</strong>
+                                            </td>
+                                            <td>@customer.Tel</td>
+                                            <td>
+                                                <span class="badge bg-secondary">@customer.State</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-primary">@customer.Status</span>
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(customer.Email))
+                                                {
+                                                    <a href="mailto:@customer.Email" class="text-decoration-none">
+                                                        @customer.Email
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">-</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(customer.Note))
+                                                {
+                                                    <span title="@customer.Note">
+                                                        @(customer.Note.Length > 30 ? customer.Note.Substring(0, 30) + "..." : customer.Note)
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">-</span>
+                                                }
+                                            </td>
+                                            <td>@customer.MetWhere</td>
+                                            <td>
+                                                @if (customer.MetWhen.HasValue)
+                                                {
+                                                    @customer.MetWhen.Value.ToString("yyyy-MM-dd")
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">-</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <span class="badge @(customer.IsTeamMember == "Yes" ? "bg-success" : "bg-secondary")">
+                                                    @customer.IsTeamMember
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <div class="mb-3">
+                                <i class="bi bi-person-x display-1 text-muted"></i>
+                            </div>
+                            <h5 class="text-muted">No customers found</h5>
+                            <p class="text-muted mb-0">
+                                @if (!string.IsNullOrEmpty(Model.SearchTerm))
+                                {
+                                    <span>No customers match your search criteria.</span>
+                                }
+                                else
+                                {
+                                    <span>You haven't created any customers yet.</span>
+                                }
+                            </p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Error message display -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+        <div class="toast show" role="alert" data-bs-autohide="true" data-bs-delay="5000">
+            <div class="toast-header bg-danger text-white">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                @TempData["ErrorMessage"]
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Custom styles -->
+<style>
+    .btn-group-sm .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .table th {
+        border-top: none;
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .badge {
+        font-size: 0.75em;
+    }
+
+    .table-responsive {
+        border-radius: 0.375rem;
+    }
+
+    .btn-group .btn:not(:last-child) {
+        margin-right: 2px;
+    }
+</style>
+
+<!-- Bootstrap Icons (if not already included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Bootstrap JS for toast functionality (if not already included) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Search functionality -->
+<script>
+    function clearSearch() {
+        // Clear the search input
+        document.getElementById('searchTerm').value = '';
+
+        // Optional: Auto-submit the form to show all results
+        // document.querySelector('form').submit();
+
+        // Or just focus back to the input
+        document.getElementById('searchTerm').focus();
+    }
+
+    // Optional: Clear search with Escape key
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('searchTerm').addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                clearSearch();
+            }
+        });
+    });
+</script>

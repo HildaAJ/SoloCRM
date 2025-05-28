@@ -33,13 +33,29 @@
 
 	<div id="mySidebar" class="sidebar">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+		<!-- Dashboard (No submenu) -->
+		<div class="menu-item">
 		<a asp-page="/Index">Dashboard</a>
-		<a asp-page="/Customers">Customers</a>
-		<a asp-page="/Products">Products</a>
+		</div>
+
+		<!-- Customer Management (With submenu) -->
+		<div class="menu-item">
+			<a href="#" class="menu-link has-submenu" onclick="toggleSubmenu(this)">Customer Management</a>
+			<div class="submenu">
+				<a class="submenu-item" asp-page="/Customers/Create">Create Customer</a>
+				<a class="submenu-item" asp-page="/Customers/Index">Customer List</a>
+				
+				<a href="#" class="submenu-item">Customer Reports</a>
+				<a href="#" class="submenu-item">Import Customers</a>
+			</div>
+		</div>
+
+		
+		@* <a asp-page="/Products">Products</a>
 		<a asp-page="/Teams">Teams</a>
 		<a asp-page="/FollowUps">Follow-ups</a>
 		<a asp-page="/Purchases">Purchases</a>
-		<a asp-page="/Cancellations">Cancellations</a>
+		<a asp-page="/Cancellations">Cancellations</a> *@
 	</div>
 
 	<!-- Main content area -->
@@ -81,6 +97,42 @@
 			}
 		}
 
+		function toggleSubmenu(element) {
+			// Get the submenu
+			const submenu = element.nextElementSibling;
+
+			// Close all other submenus
+			const allSubmenus = document.querySelectorAll('.submenu');
+			const allMenuLinks = document.querySelectorAll('.menu-link.has-submenu');
+
+			allSubmenus.forEach(sub => {
+				if (sub !== submenu) {
+					sub.classList.remove('open');
+				}
+			});
+
+			allMenuLinks.forEach(link => {
+				if (link !== element) {
+					link.classList.remove('active');
+				}
+			});
+
+			// Toggle current submenu
+			submenu.classList.toggle('open');
+			element.classList.toggle('active');
+		}
+		
+		// Optional: Close submenu when clicking outside
+		document.addEventListener('click', function(event) {
+			if (!event.target.closest('.menu-item')) {
+				const allSubmenus = document.querySelectorAll('.submenu');
+				const allMenuLinks = document.querySelectorAll('.menu-link.has-submenu');
+
+				allSubmenus.forEach(sub => sub.classList.remove('open'));
+				allMenuLinks.forEach(link => link.classList.remove('active'));
+			}
+		});
+		
 		// Handle window resize to dynamically adjust sidebar
 		window.addEventListener("resize", function () {
 			autoSidebarInit();

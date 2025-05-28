@@ -30,43 +30,30 @@
             // Customer Entity Configuration
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.Id).HasName("PK__Customer__3214EC07CCFB63B4");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Tel)
-                    .IsRequired()
-                    .HasMaxLength(10);
-
-                entity.Property(e => e.State)
-                    .HasMaxLength(10);
-
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasMaxLength(10);
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(500);
-
-                entity.Property(e => e.MetWhere)
-                    .HasMaxLength(50);
+                entity.ToTable("Customer");
 
                 entity.Property(e => e.CreatedAt)
-                    .HasDefaultValueSql("GETDATE()");
-
-                entity.Property(e => e.UpdateDate);
-
-                entity.Property(e => e.CreatedBy)
-                     .IsRequired();
-
-                entity.Property(e => e.UpdatedBy)
-                     .IsRequired();
-
+                    .HasDefaultValueSql("(getdate())")
+                    .HasColumnType("datetime");
+                entity.Property(e => e.CreatedBy).HasMaxLength(50);
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.MetWhen).HasColumnType("datetime");
+                entity.Property(e => e.MetWhere).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Note).HasMaxLength(500);
+                entity.Property(e => e.State).HasMaxLength(10);
+                entity.Property(e => e.Status)
+                      .HasConversion<int>() //Automatically convert enum to int
+                      .HasComment("Following = 1,Inactive = 2");
+                entity.Property(e => e.Tel)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+                entity.Property(e => e.UpdatedBy).HasMaxLength(50);
             });
 
             // Product Entity Configuration

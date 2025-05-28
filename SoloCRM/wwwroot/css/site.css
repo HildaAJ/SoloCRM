@@ -42,20 +42,27 @@ body {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    overflow-y: auto;
 }
-
+.sidebar-header {
+    padding: 20px;
+    background-color: #343a40;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
     /* Sidebar links */
     .sidebar a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
-        font-size: 25px;
+        font-size: 18px;
         color: #f8f9fa;
         display: block;
         transition: 0.3s;
     }
         /* Hover effect for sidebar links */
         .sidebar a:hover {
-            color: #495057;
+            /*color: #495057;*/
         }
     /* Close button in sidebar */
     .sidebar .closebtn {
@@ -66,6 +73,61 @@ body {
         margin-left: 50px;
     }
 
+/* Main Menu Item */
+.menu-item {
+    position: relative;
+}
+
+.menu-link {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #34495e;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+    .menu-link:hover {
+        background-color: #34495e;
+    }
+
+    .menu-link.has-submenu::after {
+        /*content: "¡¿";*/
+        float: right;
+        font-size: 12px;
+        transition: transform 0.3s;
+    }
+
+    .menu-link.has-submenu.active::after {
+        transform: rotate(180deg);
+    }
+/* Submenu Styles */
+.submenu {
+    background-color: #34495e;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+    .submenu.open {
+        max-height: 500px;
+    }
+
+.submenu-item {
+    display: block;
+    padding: 12px 40px;
+    color: #bdc3c7;
+    text-decoration: none;
+    border-bottom: 1px solid #2c3e50;
+    transition: all 0.3s;
+}
+
+    .submenu-item:hover {
+        background-color: #2c3e50;
+        color: white;
+        padding-left: 45px;
+    }
 /* Open button styling */
 .openbtn {
     font-size: 20px;
@@ -85,4 +147,31 @@ body {
     transition: margin-left .5s;
     margin-left: 250px;
     padding: 16px;
+}
+
+/* Alternative Style - Always Visible Submenu */
+.sidebar-alt {
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    color: white;
+    overflow-y: auto;
+}
+
+.menu-group {
+    margin: 10px 0;
+}
+
+.group-title {
+    padding: 15px 20px 10px 20px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #95a5a6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.group-items .menu-link {
+    padding-left: 30px;
+    border-bottom: none;
 }
