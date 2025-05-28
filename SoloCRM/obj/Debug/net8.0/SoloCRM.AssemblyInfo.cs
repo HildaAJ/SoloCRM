@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoloCRM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+baeb4f0c9c32f4ca66370339ae2a315e513dedfd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bf45e64b2778e91ad78b052af473a3621aea60d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoloCRM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoloCRM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
