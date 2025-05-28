@@ -1,0 +1,88 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Responsive sidebar styling for smaller screens */
+@media screen and (max-height: 450px) {
+   .sidebar {padding-top: 15px;}
+   .sidebar a {font-size: 18px;}
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Global body font */
+body {
+    margin-bottom: 60px;
+    font-family: "Lato", sans-serif;
+}
+
+/* Sidebar styling */
+.sidebar {
+    height: 100%;
+    width: 250px; /* Default expanded */
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    color: #f8f9fa;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+    /* Sidebar links */
+    .sidebar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #f8f9fa;
+        display: block;
+        transition: 0.3s;
+    }
+        /* Hover effect for sidebar links */
+        .sidebar a:hover {
+            color: #495057;
+        }
+    /* Close button in sidebar */
+    .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+/* Open button styling */
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #343a40;
+    color: #f8f9fa;
+    padding: 10px 15px;
+    border: none;
+}
+    /* Hover effect for open button */
+    .openbtn:hover {
+        background-color: #444;
+    }
+
+/* Main content area */
+#main {
+    transition: margin-left .5s;
+    margin-left: 250px;
+    padding: 16px;
+}

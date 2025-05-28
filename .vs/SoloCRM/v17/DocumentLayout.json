@@ -1,0 +1,113 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|d:\\\u9762\u8A66\u5C08\u6848\\solocrm\\solocrm\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|solutionrelative:solocrm\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|d:\\\u9762\u8A66\u5C08\u6848\\solocrm\\solocrm\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|solutionrelative:solocrm\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|d:\\\u9762\u8A66\u5C08\u6848\\solocrm\\solocrm\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|solutionrelative:solocrm\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|d:\\\u9762\u8A66\u5C08\u6848\\solocrm\\solocrm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|solutionrelative:solocrm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|d:\\\u9762\u8A66\u5C08\u6848\\solocrm\\solocrm\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9275A608-385C-4BA1-B866-56E14B35E1C1}|SoloCRM\\SoloCRM.csproj|solutionrelative:solocrm\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Register.cshtml.cs",
+              "DocumentMoniker": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeDocumentMoniker": "SoloCRM\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeToolTip": "SoloCRM\\Pages\\Account\\Register.cshtml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T01:33:10.495Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "SoloCRM\\Pages\\Index.cshtml.cs",
+              "ToolTip": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Index.cshtml.cs",
+              "RelativeToolTip": "SoloCRM\\Pages\\Index.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T01:30:04.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "SoloCRM\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "SoloCRM\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T01:21:25.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Program.cs",
+              "RelativeDocumentMoniker": "SoloCRM\\Program.cs",
+              "ToolTip": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Program.cs",
+              "RelativeToolTip": "SoloCRM\\Program.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAADYAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T00:31:03.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "SoloCRM\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\\u9762\u8A66\u5C08\u6848\\SoloCRM\\SoloCRM\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "SoloCRM\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACgAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-27T22:37:33.631Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
