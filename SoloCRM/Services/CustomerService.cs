@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using SoloCRM.Data;
 using SoloCRM.EFModels;
 using SoloCRM.Pages.Account;
@@ -11,7 +12,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SoloCRM.Services
 {
-    public class CustomerService:ICustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly AppDbContext _context;
 
@@ -22,64 +23,128 @@ namespace SoloCRM.Services
 
         public async Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(string createdBy, string searchTerm = "")
         {
-            var customers= _context.Customers.Where(x=>x.CreatedBy==createdBy);
-
-            // Apply search filter if search term is provided
-            if (!string.IsNullOrWhiteSpace(searchTerm))
-            {
-                var searchTermLower = searchTerm.Trim().ToLower();
-
-                customers = customers.Where(c =>
-                    // Search in Name
-                    (c.Name != null && c.Name.ToLower().Contains(searchTermLower)) ||
-                    // Search in Tel
-                    (c.Tel != null && c.Tel.ToLower().Contains(searchTermLower)) ||
-                    // Search in Email
-                    (c.Email != null && c.Email.ToLower().Contains(searchTermLower)) ||
-                    // Search in Note
-                    (c.Note != null && c.Note.ToLower().Contains(searchTermLower)) ||
-                    // Search in MetWhere
-                    (c.MetWhere != null && c.MetWhere.ToLower().Contains(searchTermLower))
-                );
-            }
-
-            await customers.OrderByDescending(c => c.CreatedAt).ToListAsync();
-
             var cvmLst = new List<CustomerViewModel>();
-            if (customers.Count()>0) 
+
+            try
             {
-                foreach (var item in customers) 
+                var customers = _context.Customers.Where(x => x.CreatedBy == createdBy);
+
+                // Apply search filter if search term is provided
+                if (!string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    var vm = new CustomerViewModel();
-                    vm.Name = item.Name;
-                    vm.Tel = item.Tel??"";
-                    vm.Note = item.Note ?? "";
-                    vm.Email = item.Email ?? "";
-                    vm.State = item.State ?? "";
-                    vm.Status= item.Status.GetDisplayName();
-                    vm.CurrentTeamId=item.CurrentTeamId;
-                    vm.CreatedBy = item.CreatedBy;
-                    vm.CreatedAt=item.CreatedAt;
-                    vm.MetWhen = item.MetWhen;
-                    vm.MetWhere = item.MetWhere ?? "";
-                    vm.Note = item.Note ?? "";
+                    var searchTermLower = searchTerm.Trim().ToLower();
 
-                    cvmLst.Add(vm);
+                    customers = customers.Where(c =>
+                        // Search in Name
+                        (c.Name != null && c.Name.ToLower().Contains(searchTermLower)) ||
+                        // Search in Tel
+                        (c.Tel != null && c.Tel.ToLower().Contains(searchTermLower)) ||
+                        // Search in Email
+                        (c.Email != null && c.Email.ToLower().Contains(searchTermLower)) ||
+                        // Search in Note
+                        (c.Note != null && c.Note.ToLower().Contains(searchTermLower)) ||
+                        // Search in MetWhere
+                        (c.MetWhere != null && c.MetWhere.ToLower().Contains(searchTermLower))
+                    );
                 }
-            
-            }
 
-            return cvmLst;
+                await customers.OrderByDescending(c => c.CreatedAt).ToListAsync();
+
+                if (customers.Count() > 0)
+                {
+                    foreach (var item in customers)
+                    {
+                        var vm = new CustomerViewModel();
+                        vm.Id = item.Id;
+                        vm.Name = item.Name;
+                        vm.Tel = item.Tel ?? "";
+                        vm.Note = item.Note ?? "";
+                        vm.Email = item.Email ?? "";
+                        vm.State = item.State ?? "";
+                        vm.Status = item.Status.GetDisplayName();
+                        vm.CurrentTeamId = item.CurrentTeamId;
+                        vm.CreatedBy = item.CreatedBy;
+                        vm.CreatedAt = item.CreatedAt;
+                        vm.MetWhen = item.MetWhen;
+                        vm.MetWhere = item.MetWhere ?? "";
+                        vm.Note = item.Note ?? "";
+
+                        cvmLst.Add(vm);
+                    }
+
+                }
+
+                return cvmLst;
+            }
+            catch (SqlException sqlEx)
+            {
+
+                return cvmLst;
+            }
+            catch (Exception ex)
+            {
+
+                return cvmLst;
+            }
+           
         }
 
 
         /// <summary>
         /// Get customer by ID
         /// </summary>
-        public async Task<Customer?> GetByIdAsync(int id)
+        public async Task<EFModels.Customer?> GetByIdAsync(int id)
         {
             return await _context.Customers
                 .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        /// <summary>
+        /// Get customer by ID
+        /// </summary>
+        public async Task<CustomerDetailViewModel?> GetDetailByIdAsync(int id)
+        {
+            try
+            {
+                var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+                if (customer == null)
+                    return null;
+                else
+                {
+                    int purchaseRecords = _context.PurchaseRecord.Count(x => x.CustomerId == id && x.Status == "Approved");
+                    bool isClient = false;
+                    if (purchaseRecords > 0)
+                        isClient = true;
+                    var vm = new CustomerDetailViewModel()
+                    {
+                        Id = id,
+                        Name = customer.Name ?? string.Empty,
+                        Tel = customer.Tel ?? string.Empty,
+                        Email = customer.Email ?? string.Empty,
+                        State = customer.State ?? string.Empty,
+                        MetWhere = customer.MetWhere ?? string.Empty,
+                        Status = customer.Status.GetDisplayName(),
+                        MetWhen = customer.MetWhen,
+                        Note = customer.Note ?? string.Empty,
+                        TeamMember = customer.CurrentTeamId == null ? "No" : "Yes",
+                        CreateDate = customer.CreatedAt,
+                        UpdateDate = customer.UpdateDate,
+                        Client = isClient ? "Yes" : "No"
+                    };
+                    return vm;
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            
         }
 
         /// <summary>

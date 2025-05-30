@@ -67,7 +67,7 @@ namespace SoloCRM.Pages.Customers
                 CreatedBy = GetCurrentUserAccount(),
                 CreatedAt = DateTime.Now,
                 UpdatedBy = GetCurrentUserAccount(),
-                UpdateDate = null
+                UpdateDate = DateTime.Now
             };
 
             await _customerService.CreateAsync(customer);
@@ -143,7 +143,7 @@ namespace SoloCRM.Pages.Customers
 
          public DateTime CreatedAt { get; set; }
 
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 
     public enum CustomerStatus

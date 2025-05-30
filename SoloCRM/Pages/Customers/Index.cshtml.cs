@@ -79,7 +79,7 @@ namespace SoloCRM.Pages.Customers
     /// </summary>
     public class CustomerViewModel
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Name")]
         public string Name { get; set; } = string.Empty;

@@ -55,7 +55,7 @@
         /// <summary>
         /// Record update timestamp, nullable
         /// </summary>
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
         public required string CreatedBy { get; set; }
 

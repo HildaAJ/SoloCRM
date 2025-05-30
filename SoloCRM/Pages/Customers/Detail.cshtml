@@ -1,0 +1,258 @@
+﻿@page "/customers/detail/{id:int}"
+@model SoloCRM.Pages.Customers.DetailModel
+@{
+	ViewData["Title"] = Model.Customer.IsFound ? $"Customer Detail - {Model.Customer.Name}" : "Customer Detail";
+}
+
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-0">
+                <i class="bi bi-person-circle me-2"></i>
+                Customer Detail
+            </h2>
+            @* @if (Model.Customer.IsFound)
+            {
+                <p class="text-muted mb-0">Customer ID: @Model.Customer.Id</p>
+            } *@
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <a asp-page="/Customers/Index"
+           class="btn btn-outline-secondary"
+           title="Customer List">
+            <i class="bi bi-eye"></i> Back To List
+        </a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            @Model.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model.Customer.IsFound)
+    {
+        <!-- Customer Information Card -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-person-badge me-2"></i>
+                        @Model.Customer.Name
+                    </h5>
+                    <span class="@Model.Customer.StatusDisplayClass">
+                        @Model.Customer.Status
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Basic Information -->
+                    <div class="col-md-6">
+                        <h6 class="text-primary border-bottom pb-2 mb-3">
+                            <i class="bi bi-info-circle me-2"></i>Basic Information
+                        </h6>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.Name):</label>
+                            <p class="form-control-plaintext">@Model.Customer.Name</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.Tel):</label>
+                            <p class="form-control-plaintext">
+                                @if (!string.IsNullOrEmpty(Model.Customer.Tel))
+                                {
+                                    <a href="tel:@Model.Customer.Tel" class="text-decoration-none">
+                                        <i class="bi bi-telephone me-1"></i>@Model.Customer.Tel
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not provided</span>
+                                }
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.Email):</label>
+                            <p class="form-control-plaintext">
+                                @if (!string.IsNullOrEmpty(Model.Customer.Email))
+                                {
+                                    <a href="mailto:@Model.Customer.Email" class="text-decoration-none">
+                                        <i class="bi bi-envelope me-1"></i>@Model.Customer.Email
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not provided</span>
+                                }
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.State):</label>
+                            <p class="form-control-plaintext">@Model.Customer.State</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.Client):</label>
+                            <p class="form-control-plaintext">@Model.Customer.Client</p>
+                        </div>
+                    </div>
+
+                    <!-- Meeting & Team Information -->
+                    <div class="col-md-6">
+                        <h6 class="text-primary border-bottom pb-2 mb-3">
+                            <i class="bi bi-people me-2"></i>Meeting & Team Information
+                        </h6>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.MetWhere):</label>
+                            <p class="form-control-plaintext">@Model.Customer.MetWhere</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.MetWhen):</label>
+                            <p class="form-control-plaintext">
+                                @if (Model.Customer.MetWhen.HasValue)
+                                {
+                                    <i class="bi bi-calendar me-1"></i>
+
+                                    @Model.Customer.MetWhen.Value.ToString("yyyy-MM-dd")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not specified</span>
+                                }
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.TeamMember):</label>
+                            <p class="form-control-plaintext">
+                                <i class="bi bi-person me-1"></i>@Model.Customer.TeamMember
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Html.DisplayNameFor(m => m.Customer.Status):</label>
+                            <p class="form-control-plaintext">
+                                <span class="@Model.Customer.StatusDisplayClass">@Model.Customer.Status</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes Section -->
+                @if (!string.IsNullOrEmpty(Model.Customer.Note))
+                {
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h6 class="text-primary border-bottom pb-2 mb-3">
+                                <i class="bi bi-chat-left-text me-2"></i>Notes
+                            </h6>
+                            <div class="p-3 bg-light rounded">
+                                <p class="mb-0">@Model.Customer.Note</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- System Information -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h6 class="text-primary border-bottom pb-2 mb-3">
+                            <i class="bi bi-gear me-2"></i>System Information
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <strong>Created:</strong>
+                                    <i class="bi bi-calendar-plus me-1"></i>
+                                    @Model.Customer.CreateDate.ToString("yyyy-MM-dd HH:mm")
+                                </small>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <strong>Last Updated:</strong>
+                                    <i class="bi bi-calendar-check me-1"></i>
+                                    @Model.Customer.UpdateDate.ToString("yyyy-MM-dd HH:mm")
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a asp-page="/Customers/Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Back to List
+                        </a>
+                    </div>
+                    <div>
+                        <a asp-page="/Customers/Edit" asp-route-id="@Model.Customer.Id"
+                           class="btn btn-primary me-2">
+                            <i class="bi bi-pencil me-1"></i>Edit
+                        </a>
+                        @* <button type="button" class="btn btn-outline-danger"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="bi bi-trash me-1"></i>Delete
+                        </button> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <!-- No Customer Loaded State -->
+        <div class="text-center py-5">
+            <i class="bi bi-person-x display-1 text-muted"></i>
+            <h4 class="mt-3 text-muted">Customer Not Found</h4>
+            <p class="text-muted">Please check the customer ID and try again.</p>
+        </div>
+    }
+</div>
+
+<!-- Delete Confirmation Modal -->
+@* @if (Model.Customer.IsFound)
+{
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete customer <strong>@Model.Customer.Name</strong>?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form method="post" asp-page="/Customers/Delete" asp-route-id="@Model.Customer.Id" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+} *@

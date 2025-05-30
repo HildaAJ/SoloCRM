@@ -52,7 +52,7 @@
                 entity.Property(e => e.Tel)
                     .HasMaxLength(20)
                     .IsUnicode(false);
-                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime").IsRequired(); 
                 entity.Property(e => e.UpdatedBy).HasMaxLength(50);
             });
 
@@ -84,7 +84,7 @@
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("GETDATE()");
 
-                entity.Property(e => e.UpdateDate);
+                entity.Property(e => e.UpdateDate).IsRequired();
 
                 entity.Property(e => e.CreatedBy)
                      .IsRequired();
@@ -114,7 +114,7 @@
                 entity.Property(e => e.CreatedAt)
                       .HasDefaultValueSql("GETDATE()");
 
-                entity.Property(e => e.UpdateDate);
+                entity.Property(e => e.UpdateDate).IsRequired();
 
                 entity.Property(e => e.CreatedBy)
                      .IsRequired();
@@ -157,7 +157,7 @@
                 entity.Property(e => e.CreatedAt)
                       .HasDefaultValueSql("GETDATE()");
 
-                entity.Property(e => e.UpdateDate);
+                entity.Property(e => e.UpdateDate).IsRequired();
 
                 entity.Property(e => e.CreatedBy)
                      .IsRequired();
@@ -197,7 +197,7 @@
                 entity.Property(e => e.CreatedAt)
                       .HasDefaultValueSql("GETDATE()");
 
-                entity.Property(e => e.UpdateDate);
+                entity.Property(e => e.UpdateDate).IsRequired();
 
                 entity.Property(e => e.CreatedBy)
                       .IsRequired();
@@ -244,7 +244,7 @@
                 entity.Property(e => e.CreatedAt)
                       .HasDefaultValueSql("GETDATE()");
 
-                entity.Property(e => e.UpdateDate);
+                entity.Property(e => e.UpdateDate).IsRequired();
 
                 entity.Property(e => e.CreatedBy)
                      .IsRequired();

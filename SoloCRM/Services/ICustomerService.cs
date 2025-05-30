@@ -24,6 +24,12 @@ namespace SoloCRM.Services
         Task<Customer?> GetByIdAsync(int id);
 
         /// <summary>
+        /// Get single customer by ID - Customer Detail Page
+        /// </summary>
+        /// <param name="id">Customer ID</param>
+        /// <returns>Customer view model or null if not found</returns>
+        Task<CustomerDetailViewModel?> GetDetailByIdAsync(int id);
+        /// <summary>
         /// Create new customer
         /// </summary>
         /// <param name="customer">Customer view model</param>
