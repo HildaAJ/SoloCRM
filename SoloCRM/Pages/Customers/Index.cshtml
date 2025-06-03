@@ -1,7 +1,7 @@
 ﻿@page
 @model SoloCRM.Pages.Customers.IndexModel
 @{
-	ViewData["Title"] = "Customer Management";
+    ViewData["Title"] = "Customer Management";
 }
 
 <div class="container-fluid">
@@ -16,7 +16,7 @@
                         <div class="col-md-4">
                             <label for="searchTerm" class="form-label">Search</label>
                             <input type="text" class="form-control" id="searchTerm" name="searchTerm"
-                                   value="@Model.SearchTerm" placeholder="Search customers...">
+                            value="@Model.SearchTerm" placeholder="Search customers...">
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary me-2">Search</button>
@@ -59,18 +59,22 @@
                                             <td>
                                                 <div class="btn-group btn-group-sm" role="group">
                                                     <a asp-page="/Customers/Detail" asp-route-id=@customer.Id
-                                                       class="btn btn-info btn-sm"
-                                                       title="View Details">
+                                                    class="btn btn-info btn-sm"
+                                                    title="View Details">
                                                         <i class="bi bi-eye"></i> View
                                                     </a>
                                                     <button type="button" class="btn btn-success btn-sm"
-                                                            title="Purchase Records">
+                                                    title="Purchase Records">
                                                         <i class="bi bi-cart"></i> Purchase
                                                     </button>
-                                                    <button type="button" class="btn btn-warning btn-sm"
-                                                            title="Join Team">
-                                                        <i class="bi bi-people"></i> Join
-                                                    </button>
+                                                    @if (customer.IsTeamMember == "No")
+                                                    {
+                                                        <button type="button" class="btn btn-warning btn-sm"
+                                                                title="Join Team">
+                                                            <i class="bi bi-people"></i> Join
+                                                        </button>
+                                                    }
+                                                    
                                                 </div>
                                             </td>
                                             <td>
