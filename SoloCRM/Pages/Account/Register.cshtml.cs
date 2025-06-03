@@ -39,6 +39,12 @@ namespace SoloCRM.Pages.Account
                     return Page();
                 }
 
+                if (await _userService.IsAgentCodeExistsAsync(Input.AgentCode))
+                {
+                    ModelState.AddModelError(nameof(Input.AgentCode), "This agent code already registed");
+                    return Page();
+                }
+
                 var result = await _userService.CreateUserAsync(Input);
                 if (result)
                 {
@@ -64,6 +70,10 @@ namespace SoloCRM.Pages.Account
         [Required(ErrorMessage = "Full name is required")]
         [MaxLength(100, ErrorMessage = "Full name cannot exceed 100 characters")]
         public string FullName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Agent code is required")]
+        [MaxLength(10, ErrorMessage = "Agent code cannot exceed 10 characters")]
+        public string AgentCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required")]
         [StringLength(100, ErrorMessage = "Password must be at least {2} characters long", MinimumLength = 6)]

@@ -21,13 +21,13 @@ namespace SoloCRM.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(string createdBy, string searchTerm = "")
+        public async Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(int UserId, string searchTerm = "")
         {
             var cvmLst = new List<CustomerViewModel>();
 
             try
             {
-                var customers = _context.Customers.Where(x => x.CreatedBy == createdBy);
+                var customers = _context.Customers.Where(x => x.UserId == UserId);
 
                 // Apply search filter if search term is provided
                 if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -111,10 +111,55 @@ namespace SoloCRM.Services
                     return null;
                 else
                 {
-                    int purchaseRecords = _context.PurchaseRecord.Count(x => x.CustomerId == id && x.Status == "Approved");
+                    int purchaseCnt =await _context.PurchaseRecord.CountAsync(x => x.CustomerId == id && x.Status == "Approved");
+                    var purchaseLst = new List<PurchaseRecordViewModel>();
+
                     bool isClient = false;
-                    if (purchaseRecords > 0)
-                        isClient = true;
+                    if (purchaseCnt > 0)
+                    {
+                        var PurchaseRecords = await _context.PurchaseRecord
+                                            .Where(x => x.CustomerId == id && x.Status == "Approved")
+                                            .Where(x => !_context.CancelProductRecord.Any(c => c.PurchaseId == x.Id && c.Status == "Approved"))
+                                            .ToListAsync();
+
+                        if (PurchaseRecords.Count > 0) 
+                        {
+                            isClient = true;
+                            foreach (var record in PurchaseRecords) 
+                            {
+                                var purchase = new PurchaseRecordViewModel()
+                                {
+                                    ApplyDate = record.ApplyDate,
+                                    ProductName = record.ProductName,
+                                    SumAssured = record.SumAssured,
+                                    Fees = record.Fees,
+                                    Years = record.Years,
+                                    CreatedAt = record.CreatedAt
+                                };
+                                purchaseLst.Add(purchase);
+
+                            }
+                        }
+                    }
+
+                    var followUpLst=new List<FollowUpRecordViewModel>();
+                    var followUps=await _context.FollowUpRecord.Where(x => x.CustomerId == id).ToListAsync();
+                    if (followUps.Count > 0)
+                    {
+                        foreach (var item in followUps)
+                        {
+                            var followup = new FollowUpRecordViewModel()
+                            {
+                                FollowUpType=item.FollowUpType,
+                                NextFollowUpDate = item.NextFollowUpDate,
+                                Note=item.Note,
+                                CreatedAt=item.CreatedAt
+                            };
+
+                            followUpLst.Add(followup);
+                        }
+                    }
+                       
                     var vm = new CustomerDetailViewModel()
                     {
                         Id = id,
@@ -129,7 +174,9 @@ namespace SoloCRM.Services
                         TeamMember = customer.CurrentTeamId == null ? "No" : "Yes",
                         CreateDate = customer.CreatedAt,
                         UpdateDate = customer.UpdateDate,
-                        Client = isClient ? "Yes" : "No"
+                        Client = isClient ? "Yes" : "No",
+                        PurchaseRecords= purchaseLst,
+                        FollowUpRecords= followUpLst
                     };
                     return vm;
                 }

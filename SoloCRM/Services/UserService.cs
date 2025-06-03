@@ -34,7 +34,7 @@ namespace SoloCRM.Services
 
         public async Task<bool> CreateUserAsync(RegisterInput model)
         {
-            if (await IsAccountExistsAsync(model.Account))
+            if (await IsAccountExistsAsync(model.Account) || await IsAgentCodeExistsAsync(model.AgentCode))
             {
                 return false;
             }
@@ -43,6 +43,7 @@ namespace SoloCRM.Services
             {
                 Account = model.Account,
                 FullName = model.FullName,
+                AgentCode = model.AgentCode,
                 PasswordHash = HashPassword(model.Password),
                 IsActive = true,
                 CreatedAt = DateTime.Now
@@ -56,6 +57,11 @@ namespace SoloCRM.Services
         public async Task<bool> IsAccountExistsAsync(string account)
         {
             return await _context.Users.AnyAsync(u => u.Account == account);
+        }
+
+        public async Task<bool> IsAgentCodeExistsAsync(string code)
+        {
+            return await _context.Users.AnyAsync(u => u.AgentCode == code);
         }
 
         public string HashPassword(string password)

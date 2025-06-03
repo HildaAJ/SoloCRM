@@ -11,10 +11,10 @@ namespace SoloCRM.Services
         /// <summary>
         /// Get customers created by specific user with optional search filtering
         /// </summary>
-        /// <param name="createdBy">User account who created the customers</param>
+        /// <param name="userId">User account who created the customers</param>
         /// <param name="searchTerm">Optional search term for filtering</param>
         /// <returns>List of customer view models</returns>
-        Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(string createdBy, string searchTerm = "");
+        Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(int userId, string searchTerm = "");
 
         /// <summary>
         /// Get single customer by ID

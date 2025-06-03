@@ -28,6 +28,12 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label asp-for="Input.AgentCode" class="form-label">Agent Code</label>
+                            <input asp-for="Input.AgentCode" class="form-control" />
+                            <span asp-validation-for="Input.AgentCode" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
                             <label asp-for="Input.Password" class="form-label">Password</label>
                             <input asp-for="Input.Password" class="form-control" type="password" />
                             <span asp-validation-for="Input.Password" class="text-danger"></span>

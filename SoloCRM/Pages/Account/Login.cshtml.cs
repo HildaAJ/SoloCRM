@@ -64,7 +64,8 @@ namespace SoloCRM.Pages.Account
                     {
                         new Claim(ClaimTypes.Name, user.Account),
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim("FullName", user.FullName)
+                        new Claim("FullName", user.FullName),
+                        new Claim("AgentCode", user.AgentCode)
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

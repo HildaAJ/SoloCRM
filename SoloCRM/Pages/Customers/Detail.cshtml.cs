@@ -176,5 +176,64 @@ namespace SoloCRM.Pages.Customers
             "inactive" => "badge bg-secondary",
             _ => "badge bg-primary"
         };
+
+        public List<FollowUpRecordViewModel>? FollowUpRecords { get; set; }
+
+        public List<PurchaseRecordViewModel>? PurchaseRecords { get; set; }
+    }
+
+    public class FollowUpRecordViewModel()
+    {
+        /// <summary>
+        /// Type of follow-up (e.g., call, email, meeting)
+        /// </summary>
+        public string FollowUpType { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Scheduled date for next follow-up (nullable)
+        /// </summary>
+        public DateTime? NextFollowUpDate { get; set; }
+
+        /// <summary>
+        /// Notes about the follow-up, up to 1000 characters
+        /// </summary>
+        public string Note { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Record creation timestamp, defaults to current date/time
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
+    }
+
+    public class PurchaseRecordViewModel
+    {
+        // <summary>
+        /// Date of application (no time part)
+        /// </summary>
+        public DateTime ApplyDate { get; set; }
+        /// <summary>
+        /// Name of the product purchased
+        /// </summary>
+        public string ProductName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Sum assured, nullable
+        /// </summary>
+        public decimal? SumAssured { get; set; }
+
+        /// <summary>
+        /// Fees associated with the purchase
+        /// </summary>
+        public decimal Fees { get; set; }
+
+        /// <summary>
+        /// Number of years, nullable
+        /// </summary>
+        public int? Years { get; set; }
+
+        /// <summary>
+        /// Record creation timestamp, default to current date/time
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
     }
 }

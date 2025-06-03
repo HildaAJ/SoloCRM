@@ -8,6 +8,10 @@
         public int Id { get; set; }
 
         /// <summary>
+        /// login user id
+        /// </summary>
+        public int UserId { get; set; }
+        /// <summary>
         /// Team name
         /// </summary>
         public string Name { get; set; } = string.Empty;

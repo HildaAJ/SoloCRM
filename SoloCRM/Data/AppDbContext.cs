@@ -54,6 +54,7 @@
                     .IsUnicode(false);
                 entity.Property(e => e.UpdateDate).HasColumnType("datetime").IsRequired(); 
                 entity.Property(e => e.UpdatedBy).HasMaxLength(50);
+                entity.Property(e => e.UserId).IsRequired();
             });
 
             // Product Entity Configuration
@@ -251,6 +252,7 @@
 
                 entity.Property(e => e.UpdatedBy)
                      .IsRequired();
+                entity.Property(e => e.UserId).IsRequired();
             });
 
             modelBuilder.Entity<AppUser>(entity =>
@@ -285,6 +287,7 @@
                 entity.Property(e => e.FullName).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.AgentCode).IsRequired().HasMaxLength(10);
             });
         }
 

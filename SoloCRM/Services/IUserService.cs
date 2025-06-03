@@ -11,5 +11,6 @@ namespace SoloCRM.Services
         Task<bool> IsAccountExistsAsync(string account);
         string HashPassword(string password);
         bool VerifyPassword(string password, string hashedPassword);
+        Task<bool> IsAgentCodeExistsAsync(string account);
     }
 }

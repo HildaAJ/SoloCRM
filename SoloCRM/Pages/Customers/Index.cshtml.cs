@@ -30,7 +30,7 @@ namespace SoloCRM.Pages.Customers
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; } = string.Empty;
 
-        public string CurrentUserAccount { get; set; }
+        public string CurrentUserID { get; set; }
         /// <summary>
         /// Get customers created by current user on page load
         /// </summary>
@@ -39,9 +39,9 @@ namespace SoloCRM.Pages.Customers
         {
             SearchTerm = searchTerm;
             // Get current user's account
-            CurrentUserAccount = GetCurrentUserAccount();
+            CurrentUserID = GetCurrentUserID();
 
-            if (string.IsNullOrEmpty(CurrentUserAccount))
+            if (string.IsNullOrEmpty(CurrentUserID))
             {
                 // If no user is logged in, return empty list
                 Customers = new List<CustomerViewModel>();
@@ -51,7 +51,8 @@ namespace SoloCRM.Pages.Customers
             try
             {
                 // Get customers created by current user
-                Customers = await _customerService.GetCustomersByCreatedByAsync(CurrentUserAccount, SearchTerm);
+                int userId=Convert.ToInt32(CurrentUserID);
+                Customers = await _customerService.GetCustomersByCreatedByAsync(userId, SearchTerm);
             }
             catch (Exception ex)
             {
@@ -65,11 +66,12 @@ namespace SoloCRM.Pages.Customers
         }
 
         
-        private string GetCurrentUserAccount()
+        private string GetCurrentUserID()
         {
             // Get current login user Account
-            var userAccount = User.Identity?.Name ?? "System";
-            return userAccount;
+            //var userAccount = User.Identity?.Name ?? "System";
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
+            return userId;
             //return User.FindFirst("Account")?.Value ?? "System";
         }
     }

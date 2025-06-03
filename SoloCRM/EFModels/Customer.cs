@@ -6,6 +6,10 @@ namespace SoloCRM.EFModels
     {
         public int Id { get; set; }
 
+        /// <summary>
+        /// login user id
+        /// </summary>
+        public int UserId { get; set; }
         public string Name { get; set; } = null!;
 
         public string? Tel { get; set; }
