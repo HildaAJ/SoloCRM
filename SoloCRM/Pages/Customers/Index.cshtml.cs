@@ -30,7 +30,7 @@ namespace SoloCRM.Pages.Customers
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; } = string.Empty;
 
-        public string CurrentUserID { get; set; }
+        public string CurrentUserID { get; set; } = string.Empty;
         /// <summary>
         /// Get customers created by current user on page load
         /// </summary>
@@ -52,7 +52,7 @@ namespace SoloCRM.Pages.Customers
             {
                 // Get customers created by current user
                 int userId=Convert.ToInt32(CurrentUserID);
-                Customers = await _customerService.GetCustomersByCreatedByAsync(userId, SearchTerm);
+                Customers = await _customerService.GetCustomersOnCreatedByAsync(userId, SearchTerm);
             }
             catch (Exception ex)
             {

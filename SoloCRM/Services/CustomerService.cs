@@ -21,7 +21,10 @@ namespace SoloCRM.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(int UserId, string searchTerm = "")
+        /// <summary>
+        /// Get customer by ID on Create page
+        /// </summary>
+        public async Task<IEnumerable<CustomerViewModel>> GetCustomersOnCreatedByAsync(int UserId, string searchTerm = "")
         {
             var cvmLst = new List<CustomerViewModel>();
 
@@ -91,12 +94,49 @@ namespace SoloCRM.Services
 
 
         /// <summary>
-        /// Get customer by ID
+        /// Get customer by ID on Edit page
         /// </summary>
-        public async Task<EFModels.Customer?> GetByIdAsync(int id)
+        public async Task<CustomerEditViewModel?> GetCustomersOnEditByIdAsync(int id)
         {
-            return await _context.Customers
-                .FirstOrDefaultAsync(c => c.Id == id);
+            try
+            {
+                var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+                if (customer == null)
+                    return null;
+                else
+                {
+                    string isClient = await _context.PurchaseRecord.CountAsync(x => x.CustomerId == id && x.Status == "Approved") > 0 ?"Yes":"No";
+
+                    var vm = new CustomerEditViewModel()
+                    {
+                        Id = id,
+                        Name = customer.Name ?? string.Empty,
+                        Tel = customer.Tel ?? string.Empty,
+                        Email = customer.Email ?? string.Empty,
+                        State = customer.State ?? string.Empty,
+                        MetWhere = customer.MetWhere ?? string.Empty,
+                        Status = customer.Status,
+                        MetWhen = customer.MetWhen,
+                        Note = customer.Note ?? string.Empty,
+                        TeamMember = customer.CurrentTeamId == null ? "No" : "Yes",
+                        CreateDate = customer.CreatedAt,
+                        UpdateDate = customer.UpdateDate,
+                        Client = isClient,
+                        
+                    };
+                    return vm;
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
 
         /// <summary>
@@ -212,6 +252,47 @@ namespace SoloCRM.Services
             _context.Entry(customer).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return customer;
+        }
+
+        public async Task UpdateOnEditAsync(CustomerEditViewModel customer)
+        {
+            try
+            {
+                var existingCustomer = await _context.Customers.FindAsync(customer.Id);
+
+                if (existingCustomer == null)
+                {
+                    throw new InvalidOperationException($"Customer with ID {customer.Id} not found");
+                }
+
+                _context.Entry(existingCustomer).State = EntityState.Modified;//forced to modifiy
+
+                existingCustomer.Name = customer.Name;
+                existingCustomer.Tel = customer.Tel;
+                existingCustomer.Email = customer.Email;
+                existingCustomer.State = customer.State;
+                existingCustomer.MetWhere = customer.MetWhere;
+                existingCustomer.Status = customer.Status;
+                existingCustomer.MetWhen = customer.MetWhen;
+                existingCustomer.Note = customer.Note;
+                existingCustomer.UpdateDate = DateTime.Now;
+
+                var result = await _context.SaveChangesAsync();
+                if (result == 0)
+                {
+                    throw new InvalidOperationException("Failed to update customer in database");
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new InvalidOperationException("The customer was modified by another user. Please refresh and try again.");
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new InvalidOperationException($"Database error occurred: {ex.Message}", ex);
+            }
+
         }
 
     }

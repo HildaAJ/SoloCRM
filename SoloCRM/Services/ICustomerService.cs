@@ -14,14 +14,7 @@ namespace SoloCRM.Services
         /// <param name="userId">User account who created the customers</param>
         /// <param name="searchTerm">Optional search term for filtering</param>
         /// <returns>List of customer view models</returns>
-        Task<IEnumerable<CustomerViewModel>> GetCustomersByCreatedByAsync(int userId, string searchTerm = "");
-
-        /// <summary>
-        /// Get single customer by ID
-        /// </summary>
-        /// <param name="id">Customer ID</param>
-        /// <returns>Customer view model or null if not found</returns>
-        Task<Customer?> GetByIdAsync(int id);
+        Task<IEnumerable<CustomerViewModel>> GetCustomersOnCreatedByAsync(int userId, string searchTerm = "");
 
         /// <summary>
         /// Get single customer by ID - Customer Detail Page
@@ -29,6 +22,14 @@ namespace SoloCRM.Services
         /// <param name="id">Customer ID</param>
         /// <returns>Customer view model or null if not found</returns>
         Task<CustomerDetailViewModel?> GetDetailByIdAsync(int id);
+
+        /// <summary>
+        /// Get single customer by ID - Customer Edit Page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<CustomerEditViewModel?> GetCustomersOnEditByIdAsync(int id);
+
         /// <summary>
         /// Create new customer
         /// </summary>
@@ -43,7 +44,7 @@ namespace SoloCRM.Services
         /// <returns>Updated customer view model</returns>
         Task<Customer> UpdateAsync(Customer customer);
 
-
+        Task UpdateOnEditAsync(CustomerEditViewModel customer);
     }
 }
 

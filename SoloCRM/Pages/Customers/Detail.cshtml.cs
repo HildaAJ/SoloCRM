@@ -118,7 +118,7 @@ namespace SoloCRM.Pages.Customers
         public string MetWhere { get; set; } = string.Empty;
 
         /// <summary>
-        /// Current customer status (Active, Inactive, Prospect, etc.)
+        /// Current customer status (Following, Inactive)
         /// </summary>
         [Display(Name = "Status")]
         public string Status { get; set; } = string.Empty;
@@ -157,7 +157,7 @@ namespace SoloCRM.Pages.Customers
         public DateTime UpdateDate { get; set; }
 
         /// <summary>
-        /// Client company or organization the customer belongs to
+        /// if customer is Client or not
         /// </summary>
         [Display(Name = "Client")]
         public string Client { get; set; } = string.Empty;
