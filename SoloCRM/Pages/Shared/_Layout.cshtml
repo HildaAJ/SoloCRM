@@ -15,42 +15,59 @@
 			<button id="openbtn" class="openbtn" onclick="openNav()">☰</button>
 			<a class="navbar-brand" href="/">Solo CRM</a>
 			<div class="navbar-nav ms-auto">
-			@if (User.Identity?.IsAuthenticated == true)
-			{
-				<span class="navbar-text me-3">
-					Welcome, @User.FindFirst("FullName")?.Value
-				</span>
-				<a class="nav-link" asp-page="/Account/Logout">Logout</a>
-			}
-			else
-			{
-				<a class="nav-link" asp-page="/Account/Login">Login</a>
-				<a class="nav-link" asp-page="/Account/Register">Register</a>
-			}
+				@if (User.Identity?.IsAuthenticated == true)
+				{
+					<span class="navbar-text me-3">
+						Welcome, @User.FindFirst("FullName")?.Value
+					</span>
+					<a class="nav-link" asp-page="/Account/Logout">Logout</a>
+				}
+				else
+				{
+					<a class="nav-link" asp-page="/Account/Login">Login</a>
+					<a class="nav-link" asp-page="/Account/Register">Register</a>
+				}
 			</div>
 		</div>
 	</nav>
 	<div id="mySidebar" class="sidebar">
-		
+
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
 		<!-- Dashboard (No submenu) -->
 		<div class="menu-item">
-		<a asp-page="/Index">Dashboard</a>
+			<a asp-page="/Index">Dashboard</a>
 		</div>
 
-		<!-- Customer Management (With submenu) -->
+		@* <!-- Customer Management (With submenu) -->
 		<div class="menu-item">
 			<a href="#" class="menu-link has-submenu" onclick="toggleSubmenu(this)">Customer Management</a>
 			<div class="submenu">
-				<a class="submenu-item" asp-page="/Customers/Create">Create Customer</a>
-				<a class="submenu-item" asp-page="/Customers/Index">Customer List</a>
-				
+				<a class="submenu-item @(ViewContext.RouteData.Values["page"]?.ToString().Contains("Create") == true ? "active" : "")"
+				   asp-page="/Customers/Create">Create Customer</a>
+				<a class="submenu-item @(ViewContext.RouteData.Values["page"]?.ToString().Contains("Index") == true ? "active" : "")"
+				   asp-page="/Customers/Index">Customer List</a>
 				<a href="#" class="submenu-item">Customer Reports</a>
 				<a href="#" class="submenu-item">Import Customers</a>
 			</div>
+		</div> *@
+
+		<!-- Customer Management (With submenu) -->
+		<!-- MenuHelper is set in _ViewImport -->
+		<div class="menu-item">
+			<a href="#" class="menu-link has-submenu @(MenuHelper.IsCustomerPage(ViewContext) ? "active" : "")"
+			   onclick="toggleSubmenu(this)">Customer Management</a>
+			<div class="submenu @(MenuHelper.IsCustomerPage(ViewContext) ? "open" : "")">
+				<a class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Create") ? "active" : "")"
+				   asp-page="/Customers/Create">Create Customer</a>
+				<a class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Index") ||
+		                          MenuHelper.IsCurrentPage(ViewContext, "/Customers/Edit") ||
+		                          MenuHelper.IsCurrentPage(ViewContext, "/Customers/Details") ? "active" : "")"
+				   asp-page="/Customers/Index">Customer List</a>
+				<a href="#" class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Reports") ? "active" : "")">Customer Reports</a>
+				<a href="#" class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Import") ? "active" : "")">Import Customers</a>
+			</div>
 		</div>
 
-		
 		@* <a asp-page="/Products">Products</a>
 		<a asp-page="/Teams">Teams</a>
 		<a asp-page="/FollowUps">Follow-ups</a>
@@ -106,24 +123,22 @@
 			// Close all other submenus
 			const allSubmenus = document.querySelectorAll('.submenu');
 			const allMenuLinks = document.querySelectorAll('.menu-link.has-submenu');
-
 			allSubmenus.forEach(sub => {
 				if (sub !== submenu) {
 					sub.classList.remove('open');
 				}
 			});
-
 			allMenuLinks.forEach(link => {
 				if (link !== element) {
 					link.classList.remove('active');
 				}
 			});
-
 			// Toggle current submenu
 			submenu.classList.toggle('open');
 			element.classList.toggle('active');
 		}
-		
+
+
 		// Optional: Close submenu when clicking outside
 		document.addEventListener('click', function(event) {
 			if (!event.target.closest('.menu-item')) {
@@ -134,11 +149,12 @@
 				allMenuLinks.forEach(link => link.classList.remove('active'));
 			}
 		});
-		
+
 		// Handle window resize to dynamically adjust sidebar
 		window.addEventListener("resize", function () {
 			autoSidebarInit();
 		});
+
 
 	</script>
 
