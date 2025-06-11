@@ -8,7 +8,7 @@
     - Display customers with comprehensive information
     - Multi-field Search: Search across Name, Tel, Email, Note, and MetWhere fields
     - Action Buttons: View, Purchase, and Join actions for each customer
-    - Edit customer: Edit customer info in View page
+    - View customer page: Show purchase, follow up records, and edit info botton. 
 3. Create customer
 4. Responsive Design: Mobile-friendly Bootstrap interface
 
