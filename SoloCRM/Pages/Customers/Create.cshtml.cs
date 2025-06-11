@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,7 +38,7 @@ namespace SoloCRM.Pages.Customers
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(GetCurrentUserID()))
             {
                 // Reload dropdown list if validation fails
                 StatusList = new SelectList(Enum.GetValues(typeof(CustomerStatus))
@@ -54,12 +55,12 @@ namespace SoloCRM.Pages.Customers
                 Name = CustomerViewModel.Name,
                 Tel = CustomerViewModel.Tel,
                 State = CustomerViewModel.State,
-                Status = CustomerViewModel.Status, 
+                Status = CustomerViewModel.Status,
                 Email = CustomerViewModel.Email,
                 Note = CustomerViewModel.Note,
 
                 // Set hidden fields to default/null values
-                MetWhere =CustomerViewModel.MetWhere,
+                MetWhere = CustomerViewModel.MetWhere,
                 CurrentTeamId = null,
                 MetWhen = CustomerViewModel.MetWhen,
 
@@ -67,7 +68,9 @@ namespace SoloCRM.Pages.Customers
                 CreatedBy = GetCurrentUserAccount(),
                 CreatedAt = DateTime.Now,
                 UpdatedBy = GetCurrentUserAccount(),
-                UpdateDate = DateTime.Now
+                UpdateDate = DateTime.Now,
+                UserId = Convert.ToInt32(GetCurrentUserID())
+
             };
 
             await _customerService.CreateAsync(customer);
@@ -80,6 +83,15 @@ namespace SoloCRM.Pages.Customers
             // Get current login user Account
             var userAccount = User.Identity?.Name?? "System";
             return userAccount;
+            //return User.FindFirst("Account")?.Value ?? "System";
+        }
+
+        private string GetCurrentUserID()
+        {
+            // Get current login user Account
+            //var userAccount = User.Identity?.Name ?? "System";
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
+            return userId;
             //return User.FindFirst("Account")?.Value ?? "System";
         }
     }
@@ -99,10 +111,10 @@ namespace SoloCRM.Pages.Customers
         [Display(Name = "Customer Name")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Phone number is required")]
+       
         [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters")]
         [Display(Name = "Phone")]
-        public string Tel { get; set; } = string.Empty;
+        public string? Tel { get; set; } 
 
         [StringLength(50)]
         [Display(Name = "State")]
@@ -144,6 +156,8 @@ namespace SoloCRM.Pages.Customers
          public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        
     }
 
     public enum CustomerStatus
