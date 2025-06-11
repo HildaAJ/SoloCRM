@@ -16,6 +16,6 @@
 Prerequisites:
 1. .NET 8.0 or later
 2. SQL Server LocalDB and SSMS
-3. Entityframework
+3. Entity framework
 4. Visual Studio 2022 
 
