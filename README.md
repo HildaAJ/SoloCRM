@@ -18,4 +18,4 @@ Prerequisites:
 2. SQL Server LocalDB and SSMS
 3. Entity Framework Core
 4. Visual Studio 2022 
-
+5. Download create table for project.sql and run the script on your database 
