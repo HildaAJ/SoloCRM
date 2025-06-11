@@ -1,45 +1,37 @@
-<<<<<<< HEAD
-# Build
+# .NET Build outputs
 bin/
 obj/
+*.dll
+*.exe
 
 # Visual Studio
+.vs/
 .vscode/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache and temp files
+*.vsidx
+*.v2
+*.dtbcache.v2
+*.futdcache.v2
+DocumentLayout.json
+DocumentLayout.backup.json
+
+# Visual Studio project evaluation files
+*.metadata.v9.bin
+*.projects.v9.bin
+*.strings.v9.bin
 
 # Logs
 *.log
 
-# Environment
+# Environment and configuration
 .env
 dev-appsettings.json
 
 # System files
 .DS_Store
 Thumbs.db
-=======
-# 忽略 bin 和 obj 資料夾（.NET 專案常用）
-bin/
-obj/
-
-# 忽略 VS 設定檔
-.vs/
-*.user
-*.suo
-
-# 忽略編譯產物
-*.dll
-*.exe
-
-# 忽略 log 檔案
-*.log
-
-# 忽略環境設定檔
-dev-appsettings.json
->>>>>>> master
-.vs/
-*.vsidx
-# Visual Studio files
-.vs/
-**/.vs/
