@@ -1,4 +1,6 @@
 # .NET Build outputs
+SoloCRM/bin/
+SoloCRM/obj/
 bin/
 obj/
 *.dll
@@ -6,6 +8,7 @@ obj/
 
 # Visual Studio
 .vs/
+SoloCRM/.vs/
 .vscode/
 *.user
 *.suo
