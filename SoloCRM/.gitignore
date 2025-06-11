@@ -38,3 +38,8 @@ obj/
 # 忽略環境設定檔
 dev-appsettings.json
 >>>>>>> master
+.vs/
+*.vsidx
+# Visual Studio files
+.vs/
+**/.vs/
