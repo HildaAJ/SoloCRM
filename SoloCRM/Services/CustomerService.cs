@@ -157,9 +157,12 @@ namespace SoloCRM.Services
                     bool isClient = false;
                     if (purchaseCnt > 0)
                     {
+                        //Show 5 latest records
                         var PurchaseRecords = await _context.PurchaseRecord
                                             .Where(x => x.CustomerId == id && x.Status == "Approved")
                                             .Where(x => !_context.CancelProductRecord.Any(c => c.PurchaseId == x.Id && c.Status == "Approved"))
+                                            .OrderByDescending(x=>x.UpdateDate)
+                                            .Take(5)
                                             .ToListAsync();
 
                         if (PurchaseRecords.Count > 0) 
@@ -183,7 +186,11 @@ namespace SoloCRM.Services
                     }
 
                     var followUpLst=new List<FollowUpRecordViewModel>();
-                    var followUps=await _context.FollowUpRecord.Where(x => x.CustomerId == id).ToListAsync();
+                    var followUps=await _context.FollowUpRecord
+                                        .Where(x => x.CustomerId == id)
+                                        .OrderByDescending(x => x.UpdateDate)
+                                        .Take(5)
+                                        .ToListAsync();
                     if (followUps.Count > 0)
                     {
                         foreach (var item in followUps)

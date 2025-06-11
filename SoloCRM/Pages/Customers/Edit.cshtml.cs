@@ -89,7 +89,7 @@ namespace SoloCRM.Pages.Customers
 
         [Phone(ErrorMessage = "Invalid phone number format")]
         [StringLength(20, ErrorMessage = "Phone number cannot exceed 20 characters")]
-        public string Tel { get; set; } = string.Empty;
+        public string? Tel { get; set; } 
 
         [EmailAddress(ErrorMessage = "Invalid email format")]
         [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters")]

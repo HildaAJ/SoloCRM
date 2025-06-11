@@ -63,8 +63,8 @@
 		                          MenuHelper.IsCurrentPage(ViewContext, "/Customers/Edit") ||
 		                          MenuHelper.IsCurrentPage(ViewContext, "/Customers/Details") ? "active" : "")"
 				   asp-page="/Customers/Index">Customer List</a>
-				<a href="#" class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Reports") ? "active" : "")">Customer Reports</a>
-				<a href="#" class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Import") ? "active" : "")">Import Customers</a>
+				@* <a href="#" class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Reports") ? "active" : "")">Customer Reports</a>
+				<a href="#" class="submenu-item @(MenuHelper.IsCurrentPage(ViewContext, "/Customers/Import") ? "active" : "")">Import Customers</a> *@
 			</div>
 		</div>
 
